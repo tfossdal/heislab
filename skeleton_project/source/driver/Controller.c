@@ -4,9 +4,8 @@
 void initElev(void){
     int floor = elevio_floorSensor();
     printf("floor: %d \n",floor);
-    printf("h");
     
-    if (floor == -1){
+    if (floor != 0){
         elevio_motorDirection(DIRN_DOWN);
     }
 
