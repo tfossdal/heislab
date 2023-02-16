@@ -9,19 +9,22 @@
 
 
 int main(){
-    elevio_init();
     
+    elevio_init();
     printf("=== Example Program ===\n");
     printf("Press the stop button on the elevator panel to exit\n");
 
-    //elevio_motorDirection(DIRN_UP);
     initElev();
+
+    elevio_buttonLamp(0, 1, 1);
+
+    //elevio_motorDirection(DIRN_UP);
 
     while(1){
         int floor = elevio_floorSensor();
         printf("floor: %d \n",floor);
 
-        if(floor == 1){
+        if(floor == 0){
             elevio_motorDirection(DIRN_UP);
         }
 
