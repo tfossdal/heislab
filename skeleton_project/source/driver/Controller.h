@@ -1,10 +1,11 @@
 #pragma once
+#include "elevio.h"
 
-int floor; //floorsensor
-bool doors;
-bool moving;
+int doors;
+int moving;
 
-bool ready(void);
+int ready(void);
 void stopped(void);
 void arrived(void);
 void openDoor(void);
+void initElev(void);
