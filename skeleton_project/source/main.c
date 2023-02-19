@@ -16,6 +16,8 @@ int main(){
 
     initElev();
 
+    node queueHead = NULL;
+
     elevio_buttonLamp(0, 1, 1);
 
     //elevio_motorDirection(DIRN_UP);

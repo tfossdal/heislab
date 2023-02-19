@@ -2,6 +2,8 @@
 #include <stdio.h>
 
 void initElev(void){
+
+
     int floor = elevio_floorSensor();
     printf("floor: %d \n",floor);
     
