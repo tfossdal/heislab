@@ -13,3 +13,5 @@ node addNode(node head, int value);
 void clearVal(node head, int value);
 
 void printQueue(node head);
+
+void clearQueue(node head);

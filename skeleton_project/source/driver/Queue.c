@@ -26,7 +26,7 @@ node addNode(node head, int value){
             p = p->next;
         }
     }
-    return;
+    return head;
 }
 
 void clearVal(node head, int value){
@@ -42,6 +42,7 @@ void clearVal(node head, int value){
             p = p->next;
         }
     }
+    return;
 }
 
 void printQueue(node head){
@@ -54,4 +55,16 @@ void printQueue(node head){
         printf(p->data);
         p = p->next;
     }
+}
+
+void clearQueue(node head){
+    node temp, p;
+    p = head;
+    while(p->next != NULL){
+        temp = p->next;
+        p->next = p->next->next;
+        free(temp);
+    }
+    free(p);
+    return;
 }
