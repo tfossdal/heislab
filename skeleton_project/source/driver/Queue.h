@@ -15,3 +15,9 @@ void clearVal(node head, int value);
 void printQueue(node head);
 
 void clearQueue(node head);
+
+int getFloor(node head);
+
+void addFLoor(node head);
+
+void removeFloor(node head, int value);

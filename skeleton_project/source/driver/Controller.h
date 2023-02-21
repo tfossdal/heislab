@@ -1,11 +1,17 @@
 #pragma once
 #include "elevio.h"
-
-int doors;
-int moving;
+#include "Queue.h"
 
 int ready(void);
-void stopped(void);
-void arrived(void);
+
+int stopped(void);
+
+int arrived(void);
+
 void openDoor(void);
+
 void initElev(void);
+
+void setMotorDirection(MotorDirection dirn);
+
+void checkStopButton(node head);

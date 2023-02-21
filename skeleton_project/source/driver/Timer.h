@@ -1,2 +1,3 @@
 #pragma once
-int threesecs;
+#include <stdio.h>
+#include <signal.h>

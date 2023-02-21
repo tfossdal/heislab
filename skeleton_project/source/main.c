@@ -8,22 +8,27 @@
 
 
 
+int main()
+{
 
-int main(){
-    
     elevio_init();
     printf("=== Example Program ===\n");
     printf("Press the stop button on the elevator panel to exit\n");
 
+
     initElev();
 
-    node queueHead = NULL;
+    //node queueHead = NULL;
+
 
     elevio_buttonLamp(0, 1, 1);
 
     //elevio_motorDirection(DIRN_UP);
 
     while(1){
+
+        
+
         int floor = elevio_floorSensor();
         printf("floor: %d \n",floor);
 

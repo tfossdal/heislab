@@ -25,6 +25,7 @@ node addNode(node head, int value){
         while(p->next != NULL){
             p = p->next;
         }
+        p->next = temp;
     }
     return head;
 }
@@ -42,6 +43,7 @@ void clearVal(node head, int value){
             p = p->next;
         }
     }
+    // Legg inn til å fjerne bakerst også
     return;
 }
 
@@ -66,5 +68,7 @@ void clearQueue(node head){
         free(temp);
     }
     free(p);
+    // Legg inn til å håndtere bakerst
+    // og kanskje tilbake til NULL
     return;
 }
