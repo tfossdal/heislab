@@ -6,12 +6,12 @@ int ready(void);
 
 int stopped(void);
 
-int arrived(void);
+int arrived(MotorDirection *currentDir);
 
 void openDoor(void);
 
-void initElev(void);
+void initElev(MotorDirection *currentDir);
 
-void setMotorDirection(MotorDirection dirn);
+void setMotorDirection(MotorDirection dirn, MotorDirection *currentDir);
 
-void checkStopButton(node head);
+void checkStopButton(node head, MotorDirection *currentDir);

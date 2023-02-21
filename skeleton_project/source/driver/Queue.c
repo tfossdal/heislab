@@ -49,12 +49,14 @@ void clearVal(node head, int value){
 
 void printQueue(node head){
     node p;
-    while(1){
+    p = head;
+    while (1)
+    {
         if (p == NULL)
         {
             return;
         }
-        printf(p->data);
+        printf("%d ", p->data);
         p = p->next;
     }
 }
