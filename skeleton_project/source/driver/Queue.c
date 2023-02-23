@@ -1,11 +1,5 @@
 #include "Queue.h"
 
-struct LinkedList
-{
-    int data;
-    struct LinkedList *next;
-};
-
 node createNode(){
     node temp;
     temp = (node)malloc(sizeof(struct LinkedList));
@@ -27,12 +21,25 @@ node addNode(node head, int value){
         }
         p->next = temp;
     }
+    printf("%d", head->data);
     return head;
 }
 
-void clearVal(node head, int value){
+node clearVal(node head, int value){
     node temp, p;
     p = head;
+    if (p == NULL){ // avbryter om køen er tom
+        printf("komme viss head e NULL");
+        return head;
+    }
+    if(p->next == NULL){ // om det ikke er flere elementer i køen sette head til NULL
+        printf("Denne komme viss next e NULL");
+        temp = p;
+        p = NULL;
+        free(temp);
+        
+        return p;
+    }
     while (p->next != NULL){
         if (p->next->data == value){
             temp = p->next;
@@ -44,33 +51,45 @@ void clearVal(node head, int value){
         }
     }
     // Legg inn til å fjerne bakerst også
-    return;
+    return head;
 }
 
-void printQueue(node head){
+node printQueue(node head){
     node p;
     p = head;
     while (1)
     {
         if (p == NULL)
         {
-            return;
+            return head;
         }
         printf("%d ", p->data);
         p = p->next;
     }
 }
 
-void clearQueue(node head){
+node clearQueue(node head){
     node temp, p;
     p = head;
+    if(head == NULL){
+        return head;
+    }
     while(p->next != NULL){
         temp = p->next;
         p->next = p->next->next;
         free(temp);
-    }
-    free(p);
+    };
+    temp = p->next;
+    free(temp);
+    temp = p;
+    p = NULL;
+    free(temp);
     // Legg inn til å håndtere bakerst
     // og kanskje tilbake til NULL
-    return;
+    return p;
+}
+
+node addFloor(node head, int floor){
+    head = addNode(head, floor);
+    return head;
 }

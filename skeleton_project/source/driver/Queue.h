@@ -2,7 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct LinkedList; //LinkedList implementation from hackerearth.com
+struct LinkedList{
+    int data;
+    struct LinkedList *next;
+};
+//LinkedList implementation from hackerearth.com
 
 typedef struct LinkedList *node;
 
@@ -10,14 +14,14 @@ node createNode();
 
 node addNode(node head, int value);
 
-void clearVal(node head, int value);
+node clearVal(node head, int value);
 
-void printQueue(node head);
+node printQueue(node head);
 
-void clearQueue(node head);
+node clearQueue(node head);
 
 int getFloor(node head);
 
-void addFLoor(node head);
+node addFloor(node head, int floor);
 
 void removeFloor(node head, int value);
