@@ -61,7 +61,7 @@ node printQueue(node head){
     {
         if (p == NULL)
         {
-            return head;
+            return head;        // avbryter viss tom kø
         }
         printf("%d ", p->data);
         p = p->next;
@@ -71,18 +71,18 @@ node printQueue(node head){
 node clearQueue(node head){
     node temp, p;
     p = head;
-    if(head == NULL){
+    if(head == NULL){       // avbryter om kø allerede er tom
         return head;
     }
-    while(p->next != NULL){
+    while(p->next != NULL){     // fjerner neste element, og setter neste neste som neste
         temp = p->next;
         p->next = p->next->next;
         free(temp);
     };
-    temp = p->next;
+    temp = p->next;     // fjerner nest siste
     free(temp);
     temp = p;
-    p = NULL;
+    p = NULL;           // fjerner siste
     free(temp);
     // Legg inn til å håndtere bakerst
     // og kanskje tilbake til NULL

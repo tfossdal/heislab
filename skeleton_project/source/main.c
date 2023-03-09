@@ -15,17 +15,19 @@ int goal = -2;
 int main()
 {
     MotorDirection direction = DIRN_STOP;
-    MotorDirection *currentDir = &direction;
+    MotorDirection *currentDir = &direction; // Holde styr på retningen til heisen, trenge nok ikkje vær peker
 
     elevio_init();
     printf("=== Example Program ===\n");
     printf("Press the stop button on the elevator panel to exit\n");
 
-    initElev(currentDir);
+    initElev(currentDir); // Vårt start-program
 
-    node queueHead = NULL;
+    node queueHead = NULL; // Starten på køen, skape litt trøbbel
 
-    time_t timeClosed = time(NULL) - 3;
+    time_t timeClosed = time(NULL) - 3; // For å starta me dørene lukka, da de basere
+                                        // på at den e minst 3 lavere enn nåværende tid
+
 
 
     elevio_buttonLamp(0, 1, 1);
@@ -40,7 +42,7 @@ int main()
         if(doors){
             // printf("d"); //brukt til å test om doors er åpne i 3 sekunder etter knappen er sluppet
         }
-        time_t now = time(NULL);
+        time_t now = time(NULL);    //oppdaterer nåværende tid
 
         if (queueHead!=NULL && goal == -2){ //goal = -2 betyr at det ikke er noe mål enda, må settes til -2 når den kommer frem
             goal = queueHead->data;
@@ -48,15 +50,15 @@ int main()
 
         if (floor == goal) // kjører når heis er fremme
         {
-            setMotorDirection(DIRN_STOP, currentDir);
-            queueHead = clearVal(queueHead, goal);
-            openDoor(&doors);
-            timeClosed = time(NULL);
-            printf("goal is now %d \n", goal);
-            if(queueHead == NULL){
+            setMotorDirection(DIRN_STOP, currentDir); // setter motor til stopp, må fikses så den ikke kalles når heisen skal videre
+            queueHead = clearVal(queueHead, goal);      // fjerner en verdi fra køen
+            openDoor(&doors);       // åpner dørene
+            timeClosed = time(NULL);    // sier at dørene ble åpnet nå, navnet er feil :(
+            printf("goal is now %d \n", goal);  // brukt til feilsøking
+            if(queueHead == NULL){  // hvis kø er tom skal det ikke være noe mål
                 goal = -2;
             }
-            printf("Clearval has been run\n");
+            printf("Clearval has been run\n"); // brukt til feilsøking
         }
         
         good2go = ready(timeClosed, now, goal, doors, currentDir); // sjekker om heisen er klar, dvs tid siden dører åpnet, om dører er åpne og har et mål
@@ -84,26 +86,26 @@ int main()
 
         if (elevio_stopButton())
         {
-            StopButton(queueHead, currentDir, &doors);
-            queueHead = NULL;
+            StopButton(queueHead, currentDir, &doors); // gjør noen ting når stopp trykkes, se definisjon
+            queueHead = NULL;       // setter kø til ingenting, kan muligens skape trøbbel at minne ikke frigjøres
             elevio_motorDirection(DIRN_STOP);
             if (elevio_floorSensor() != -1){ // står heisen i en etasje skal den starte timer på åpne dører
-                timeClosed = time(NULL);
+                timeClosed = time(NULL);    //sier når dørene ble åpnet
             }else{
                 setMotorDirection(DIRN_DOWN, currentDir);
-                while(elevio_floorSensor() != 0){};
-                setMotorDirection(DIRN_STOP, currentDir);
+                while(elevio_floorSensor() != 0){};     // gå ned til etasje er lik 0, altså første
+                setMotorDirection(DIRN_STOP, currentDir);   // stopp der
             }
 
-            continue; //starte løkken på ny
+            continue; //starter løkken på ny etter stop-knapp
 
         }
         if (now > timeClosed + 3){ // closes doors if open for more than three secs since stop
-            closeDoor(&doors);
-            printf("Doors closed \n");
+            closeDoor(&doors);      // kanskje legge til at denne kun kjøres dersom dørene er åpne
+            printf("Doors closed \n");  // det kan gjørs me global variabel
         }
 
-        for (int i = 0; i < N_FLOORS; i++)
+        for (int i = 0; i < N_FLOORS; i++) // oppdatere knapper
         {
             for (int j = 0; j < N_BUTTONS; j++)
             {
@@ -114,7 +116,7 @@ int main()
             }
             
         }
-        if(queueHead != NULL){
+        if(queueHead != NULL){  // brukt til feilsøking
             printf("head e ikkje NULL \n");
         }
 

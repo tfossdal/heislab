@@ -6,8 +6,8 @@
 int isStopped = 0;
 
 int ready(time_t timeStopped, time_t timeNow, int goal, int doors, MotorDirection *currentDir){
-    int good2go = (timeNow > timeStopped) && goal != -2 && doors == 0 && *currentDir == 0;
-    return good2go;
+    int good2go = (timeNow > timeStopped + 3) && goal != -2 && doors == 0 && *currentDir == 0;
+    return good2go; // returner ready, om dørene er lukket, har et mål, dørene lukket og ikke i bevegelse
 }
 
 void initElev(MotorDirection *currentDir)
@@ -20,7 +20,7 @@ void initElev(MotorDirection *currentDir)
         setMotorDirection(DIRN_DOWN, currentDir);
     }
 
-    while (floor != 0){
+    while (floor != 0){         // oppdaterer floor til den har nådd bunnen og starter while-løkka i main
         floor = elevio_floorSensor();
         printf("floor: %d \n",floor);
     }
@@ -30,11 +30,11 @@ void initElev(MotorDirection *currentDir)
     return;
 }
 
-int stopped(void){
+int stopped(void){      // brukes ikke atm
     return isStopped;
 }
 
-int arrived(MotorDirection *currentDir){
+int arrived(MotorDirection *currentDir){    // sjekker om etasje definert og heisen står i ro
     return ((elevio_floorSensor() != -1) && (*currentDir == DIRN_STOP));
 }
 
@@ -61,10 +61,10 @@ void StopButton(node head, MotorDirection *currentDir, int *doors){ //blir kalt 
         else{                                          // litt usikker på pekere, men målet e at doors ska holda styr på om dørå e åpen
         head = clearQueue(head);
         }
-        if (elevio_floorSensor() == -1)
+        if (elevio_floorSensor() == -1)     // viss etasje udef, stopp
         {
             setMotorDirection(DIRN_STOP, currentDir);
-        }else{
+        }else{          // viss etasje definert, åpne dører
             openDoor(doors);
         }
         elevio_stopLamp(1);
