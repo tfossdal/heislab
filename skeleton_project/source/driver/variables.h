@@ -1,5 +1,6 @@
 #pragma once
 #include "elevio.h"
+#include "Queue.h"
 
 extern int doors;
 
@@ -10,3 +11,5 @@ extern int goal;
 extern int stop;
 
 extern MotorDirection direction;
+
+extern node queueHead;
