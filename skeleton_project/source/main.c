@@ -45,11 +45,17 @@ int main()
 
     while (1)
     {
-        printf("Her starte løkka på ny \n");
+        //printf("Her starte løkka på ny \n");
         int floor = elevio_floorSensor();
+        queueHead = printQueue(queueHead);
 
         if(floor != -1){ // Sets the floor indicator
             elevio_floorIndicator(floor);
+        }
+
+        if(floor == goal && direction == DIRN_STOP){
+            queueHead = clearVal(queueHead, goal);
+            printf("cleard cuz f=g\n");
         }
 
         if(doors){
@@ -57,7 +63,7 @@ int main()
         }
         time_t now = time(NULL);    //oppdaterer nåværende tid
 
-        if (queueHead!=NULL && goal == -2){ //goal = -2 betyr at det ikke er noe mål enda, må settes til -2 når den kommer frem
+        if (queueHead!=NULL && direction == DIRN_STOP){ //goal = -2 betyr at det ikke er noe mål enda, må settes til -2 når den kommer frem
             goal = queueHead->data;
         }
 
@@ -83,15 +89,16 @@ int main()
 
         }
 
-        if (floor == goal) // kjører når heis er fremme
+        if (floor == goal && direction != DIRN_STOP) // kjører når heis er fremme
         {
             setMotorDirection(DIRN_STOP); // setter motor til stopp, må fikses så den ikke kalles når heisen skal videre
-            queueHead = clearVal(queueHead, goal);      // fjerner en verdi fra køen
             openDoor();       // åpner dørene
             timeOpened = time(NULL);    // sier at dørene ble åpnet nå, navnet er feil :(
             printf("goal is now %d \n", goal);  // brukt til feilsøking
             if(queueHead == NULL){  // hvis kø er tom skal det ikke være noe mål
                 goal = -2;
+            }else{
+                goal = queueHead->data;
             }
             printf("Clearval has been run\n"); // brukt til feilsøking
         }
@@ -144,7 +151,7 @@ int main()
         {
             for (int j = 0; j < N_BUTTONS; j++)
             {
-                if (elevio_callButton(i, j) == 1){
+                if (elevio_callButton(i, j) == 1 && floor != i){
                     queueHead = addFloor(queueHead, i, j);
                     elevio_buttonLamp(i, j, 1);
                 }

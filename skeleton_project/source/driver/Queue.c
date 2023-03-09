@@ -35,7 +35,7 @@ node clearVal(node head, int value){
         printf("komme viss head e NULL");
         return head;
     }
-    if(p->next == NULL){ // om det ikke er flere elementer i køen sette head til NULL
+    if(p->next == NULL && p->data == value){ // om det ikke er flere elementer i køen sette head til NULL
         printf("Denne komme viss next e NULL");
         temp = p;
         p = NULL;
@@ -54,12 +54,18 @@ node clearVal(node head, int value){
         }
     }
     // Legg inn til å fjerne bakerst også
+    if(head->data == value){
+        temp = head;
+        head = head->next;
+        free(temp);
+    }
     return head;
 }
 
 node printQueue(node head){
     node p;
     p = head;
+    printf("Kø: ");
     while (1)
     {
         if (p == NULL)
@@ -69,6 +75,8 @@ node printQueue(node head){
         printf("%d ", p->data);
         p = p->next;
     }
+    printf("\n");
+    return head;
 }
 
 node clearQueue(node head){
