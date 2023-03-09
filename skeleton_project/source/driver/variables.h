@@ -18,3 +18,6 @@ extern node queueHead;
 
 extern int obstruction;
 
+extern int lastFloor;
+
+extern MotorDirection lastDir;
