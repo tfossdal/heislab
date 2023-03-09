@@ -16,6 +16,7 @@ int stop = 0;
 
 MotorDirection direction = DIRN_STOP;
 
+node queueHead = NULL; // Starten på køen, skape litt trøbbel
 
 int main()
 {
@@ -27,7 +28,6 @@ int main()
 
     initElev(direction); // Vårt start-program
 
-    node queueHead = NULL; // Starten på køen, skape litt trøbbel
 
     time_t timeClosed = time(NULL) - 3; // For å starta me dørene lukka, da de basere
                                         // på at den e minst 3 lavere enn nåværende tid
