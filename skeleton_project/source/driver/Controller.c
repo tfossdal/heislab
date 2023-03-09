@@ -17,6 +17,15 @@ void initElev()
 
     int floor = elevio_floorSensor();
     printf("floor: %d \n",floor);
+
+    for (int i = 0; i < N_FLOORS; i++) // oppdatere knapper
+        {
+            for (int j = 0; j < N_BUTTONS; j++)
+            {
+                    elevio_buttonLamp(i, j, 0);
+            }
+            
+        }
     
     if (floor != 0){
         setMotorDirection(DIRN_DOWN);
@@ -79,8 +88,13 @@ void StopButton(){ //blir kalt i main når stopknapp er trykket
 
 void stopMidway(void){
     setMotorDirection(DIRN_STOP);
-    clearVal(queueHead, elevio_floorSensor());
+    int currentfloor = elevio_floorSensor();
+    clearVal(queueHead, currentfloor);
     openDoor();
+    for (int i = 0; i < 3; i++)
+    {
+        elevio_buttonLamp(currentfloor, i, 0);
+    }
     
     return;
 }

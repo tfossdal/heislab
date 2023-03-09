@@ -65,6 +65,12 @@ int main()
             goal = queueHead->data;
         }
 
+        if(obstruction = 1){
+            if (doors == doorOpen){
+                timeOpened = now;
+            }
+        }
+
         if(direction!=DIRN_STOP && floor != -1){
             node p;
             p = queueHead;
@@ -101,6 +107,11 @@ int main()
                 goal = queueHead->data;
             }
             printf("Clearval has been run\n"); // brukt til feilsøking
+
+            for (int i = 0; i < 3; i++)
+            {
+                elevio_buttonLamp(floor, i, 0);
+            }
         }
         
         good2go = ready(timeOpened, now, goal); // sjekker om heisen er klar, dvs tid siden dører åpnet, om dører er åpne og har et mål
