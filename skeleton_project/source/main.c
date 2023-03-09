@@ -139,15 +139,18 @@ int main()
 
         if (elevio_stopButton())
         {
+            if(direction != DIRN_STOP){
+                lastDir = direction;
+            }
+            elevio_motorDirection(DIRN_STOP);
             StopButton(); // gjør noen ting når stopp trykkes, se definisjon
             queueHead = NULL;       // setter kø til ingenting, kan muligens skape trøbbel at minne ikke frigjøres
-            elevio_motorDirection(DIRN_STOP);
             if (elevio_floorSensor() != -1){ // står heisen i en etasje skal den starte timer på åpne dører
                 timeOpened = time(NULL);    //sier når dørene ble åpnet
-            }else{
-                setMotorDirection(DIRN_DOWN);
-                while(elevio_floorSensor() != 0){};     // gå ned til etasje er lik 0, altså første
-                setMotorDirection(DIRN_STOP);   // stopp der
+            // }else{
+            //     setMotorDirection(DIRN_DOWN);
+            //     while(elevio_floorSensor() != 0){};     // gå ned til etasje er lik 0, altså første
+            //     setMotorDirection(DIRN_STOP);   // stopp der
             }
 
             continue; //starter løkken på ny etter stop-knapp

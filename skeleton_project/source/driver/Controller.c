@@ -75,6 +75,7 @@ void StopButton(){ //blir kalt i main når stopknapp er trykket
         if (elevio_floorSensor() == -1)     // viss etasje udef, stopp
         {
             setMotorDirection(DIRN_STOP);
+            goal = -2;
         }else{          // viss etasje definert, åpne dører
             openDoor();
         }
