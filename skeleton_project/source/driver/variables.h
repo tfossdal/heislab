@@ -13,3 +13,5 @@ extern int stop;
 extern MotorDirection direction;
 
 extern node queueHead;
+
+extern int obstruction;

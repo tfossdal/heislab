@@ -18,6 +18,8 @@ MotorDirection direction = DIRN_STOP;
 
 node queueHead = NULL; // Starten på køen, skape litt trøbbel
 
+int obstruction = 0;
+
 int main()
 {
     // MotorDirection *currentDir = &direction; // Holde styr på retningen til heisen, trenge nok ikkje vær peker
@@ -144,6 +146,8 @@ int main()
         //         elevio_buttonLamp(f, b, btnPressed);
         //     }
         // }
+
+        obstruction = elevio_obstruction();
 
         if (elevio_obstruction())
         {
