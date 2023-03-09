@@ -56,10 +56,10 @@ void setMotorDirection(MotorDirection dirn){
     return;
 }
 
-void StopButton(node head){ //blir kalt i main når stopknapp er trykket
-        if (head == NULL){}
+void StopButton(){ //blir kalt i main når stopknapp er trykket
+        if (queueHead == NULL){}
         else{                                          // litt usikker på pekere, men målet e at doors ska holda styr på om dørå e åpen
-        head = clearQueue(head);
+        queueHead = clearQueue(queueHead);
         }
         if (elevio_floorSensor() == -1)     // viss etasje udef, stopp
         {
