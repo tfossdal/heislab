@@ -105,7 +105,7 @@ int main()
 
         }
         if (now > timeClosed + 3){ // closes doors if open for more than three secs since stop
-            closeDoor(&doors);      // kanskje legge til at denne kun kjøres dersom dørene er åpne
+            closeDoor();      // kanskje legge til at denne kun kjøres dersom dørene er åpne
             printf("Doors closed \n");  // det kan gjørs me global variabel
         }
 

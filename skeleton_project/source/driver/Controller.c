@@ -17,7 +17,7 @@ void initElev()
     printf("floor: %d \n",floor);
     
     if (floor != 0){
-        setMotorDirection(DIRN_DOWN, direction);
+        setMotorDirection(DIRN_DOWN);
     }
 
     while (floor != 0){         // oppdaterer floor til den har nådd bunnen og starter while-løkka i main
@@ -25,7 +25,7 @@ void initElev()
         printf("floor: %d \n",floor);
     }
 
-    setMotorDirection(DIRN_STOP, direction);
+    setMotorDirection(DIRN_STOP);
 
     return;
 }
@@ -34,38 +34,38 @@ int stopped(void){      // brukes ikke atm
     return isStopped;
 }
 
-int arrived(MotorDirection *currentDir){    // sjekker om etasje definert og heisen står i ro
-    return ((elevio_floorSensor() != -1) && (*currentDir == DIRN_STOP));
+int arrived(){    // sjekker om etasje definert og heisen står i ro
+    return ((elevio_floorSensor() != -1) && (direction == DIRN_STOP));
 }
 
-void openDoor(int *doors){
+void openDoor(){
     elevio_doorOpenLamp(1);
-    *doors = 1;
+    doors = 1;
     return;
 }
 
-void closeDoor(int *doors){
+void closeDoor(){
     elevio_doorOpenLamp(0);
-    *doors = 0;
+    doors = 0;
     return;
 }
 
-void setMotorDirection(MotorDirection dirn, MotorDirection *currentDir){
-    *currentDir = dirn;
+void setMotorDirection(MotorDirection dirn){
+    direction = dirn;
     elevio_motorDirection(dirn);
     return;
 }
 
-void StopButton(node head, MotorDirection *currentDir, int *doors){ //blir kalt i main når stopknapp er trykket
+void StopButton(node head){ //blir kalt i main når stopknapp er trykket
         if (head == NULL){}
         else{                                          // litt usikker på pekere, men målet e at doors ska holda styr på om dørå e åpen
         head = clearQueue(head);
         }
         if (elevio_floorSensor() == -1)     // viss etasje udef, stopp
         {
-            setMotorDirection(DIRN_STOP, currentDir);
+            setMotorDirection(DIRN_STOP);
         }else{          // viss etasje definert, åpne dører
-            openDoor(doors);
+            openDoor();
         }
         elevio_stopLamp(1);
         isStopped = 1;
