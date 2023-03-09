@@ -21,6 +21,10 @@ node queueHead = NULL; // Starten på køen, skape litt trøbbel
 
 int obstruction = 0;
 
+int lastFloor = 0;
+
+MotorDirection lastDir;
+
 int main()
 {
     // MotorDirection *currentDir = &direction; // Holde styr på retningen til heisen, trenge nok ikkje vær peker
@@ -49,6 +53,7 @@ int main()
 
         if(floor != -1){ // Sets the floor indicator
             elevio_floorIndicator(floor);
+            lastFloor = floor;
         }
 
         if(floor == goal && direction == DIRN_STOP){
