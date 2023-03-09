@@ -6,6 +6,12 @@
 #include "driver/Controller.h"
 #include "driver/Queue.h"
 
+int doors = 0;
+
+int good2go = 1;
+
+int goal = -2;
+
 int main()
 {
     MotorDirection direction = DIRN_STOP;
@@ -21,11 +27,6 @@ int main()
 
     time_t timeClosed = time(NULL) - 3;
 
-    int doors = 0;
-
-    int good2go = 1;
-
-    int goal = -2;
 
     elevio_buttonLamp(0, 1, 1);
 
