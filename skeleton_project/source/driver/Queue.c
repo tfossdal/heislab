@@ -52,6 +52,11 @@ node clearVal(node head, int value){
         }
     }
     // Legg inn til å fjerne bakerst også
+    if(p->data == value){
+        temp = head;
+        head = head->next;
+        free(temp);
+    }
     return head;
 }
 
@@ -67,6 +72,7 @@ node printQueue(node head){
         printf("%d ", p->data);
         p = p->next;
     }
+    return head;
 }
 
 node clearQueue(node head){
