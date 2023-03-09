@@ -3,12 +3,13 @@
 #include <stdlib.h>
 #include "elevio.h"
 
-struct LinkedList{
+struct LinkedList
+{
     int data;
     ButtonType btnType;
     struct LinkedList *next;
 };
-//LinkedList implementation from hackerearth.com
+// LinkedList implementation from hackerearth.com
 
 typedef struct LinkedList *node;
 
