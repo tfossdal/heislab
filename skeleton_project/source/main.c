@@ -46,6 +46,10 @@ int main()
         printf("Her starte løkka på ny \n");
         int floor = elevio_floorSensor();
 
+        if(floor != -1){
+            elevio_floorIndicator(floor);
+        }
+
         if(doors){
             // printf("d"); //brukt til å test om doors er åpne i 3 sekunder etter knappen er sluppet
         }
