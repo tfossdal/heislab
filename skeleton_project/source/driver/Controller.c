@@ -1,7 +1,7 @@
 #include "Controller.h"
 #include <stdio.h>
 #include <time.h>
-
+#include "variables.h"
 
 int isStopped = 0;
 
@@ -10,14 +10,14 @@ int ready(time_t timeStopped, time_t timeNow, int goal, int doors, MotorDirectio
     return good2go; // returner ready, om dørene er lukket, har et mål, dørene lukket og ikke i bevegelse
 }
 
-void initElev(MotorDirection *currentDir)
+void initElev()
 {
 
     int floor = elevio_floorSensor();
     printf("floor: %d \n",floor);
     
     if (floor != 0){
-        setMotorDirection(DIRN_DOWN, currentDir);
+        setMotorDirection(DIRN_DOWN, direction);
     }
 
     while (floor != 0){         // oppdaterer floor til den har nådd bunnen og starter while-løkka i main
@@ -25,7 +25,7 @@ void initElev(MotorDirection *currentDir)
         printf("floor: %d \n",floor);
     }
 
-    setMotorDirection(DIRN_STOP, currentDir);
+    setMotorDirection(DIRN_STOP, direction);
 
     return;
 }

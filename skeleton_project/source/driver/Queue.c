@@ -1,4 +1,5 @@
 #include "Queue.h"
+#include "variables.h"
 
 node createNode(){
     node temp;
