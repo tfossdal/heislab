@@ -31,7 +31,7 @@ int main()
     initElev(); // Vårt start-program
 
 
-    time_t timeClosed = time(NULL) - 3; // For å starta me dørene lukka, da de basere
+    time_t timeOpened = time(NULL) - 3; // For å starta me dørene lukka, da de basere
                                         // på at den e minst 3 lavere enn nåværende tid
 
 
@@ -59,7 +59,7 @@ int main()
             setMotorDirection(DIRN_STOP); // setter motor til stopp, må fikses så den ikke kalles når heisen skal videre
             queueHead = clearVal(queueHead, goal);      // fjerner en verdi fra køen
             openDoor();       // åpner dørene
-            timeClosed = time(NULL);    // sier at dørene ble åpnet nå, navnet er feil :(
+            timeOpened = time(NULL);    // sier at dørene ble åpnet nå, navnet er feil :(
             printf("goal is now %d \n", goal);  // brukt til feilsøking
             if(queueHead == NULL){  // hvis kø er tom skal det ikke være noe mål
                 goal = -2;
@@ -67,7 +67,7 @@ int main()
             printf("Clearval has been run\n"); // brukt til feilsøking
         }
         
-        good2go = ready(timeClosed, now, goal, doors, direction); // sjekker om heisen er klar, dvs tid siden dører åpnet, om dører er åpne og har et mål
+        good2go = ready(timeOpened, now, goal, doors, direction); // sjekker om heisen er klar, dvs tid siden dører åpnet, om dører er åpne og har et mål
         
 
         printf("floor: %d \n", floor);
@@ -96,7 +96,7 @@ int main()
             queueHead = NULL;       // setter kø til ingenting, kan muligens skape trøbbel at minne ikke frigjøres
             elevio_motorDirection(DIRN_STOP);
             if (elevio_floorSensor() != -1){ // står heisen i en etasje skal den starte timer på åpne dører
-                timeClosed = time(NULL);    //sier når dørene ble åpnet
+                timeOpened = time(NULL);    //sier når dørene ble åpnet
             }else{
                 setMotorDirection(DIRN_DOWN);
                 while(elevio_floorSensor() != 0){};     // gå ned til etasje er lik 0, altså første
@@ -106,7 +106,7 @@ int main()
             continue; //starter løkken på ny etter stop-knapp
 
         }
-        if (now > timeClosed + 3){ // closes doors if open for more than three secs since stop
+        if (now > timeOpened + 3){ // closes doors if open for more than three secs since stop
             closeDoor();      // kanskje legge til at denne kun kjøres dersom dørene er åpne
             printf("Doors closed \n");  // det kan gjørs me global variabel
         }
