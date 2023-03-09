@@ -12,11 +12,15 @@ int good2go = 1;
 
 int goal = -2;
 
+int stop = 0;
+
+MotorDirection direction = DIRN_STOP;
+
+
 int main()
 {
-    MotorDirection direction = DIRN_STOP;
-    MotorDirection *currentDir = &direction; // Holde styr på retningen til heisen, trenge nok ikkje vær peker
-
+    // MotorDirection *currentDir = &direction; // Holde styr på retningen til heisen, trenge nok ikkje vær peker
+    // Prøve uden denne
     elevio_init();
     printf("=== Example Program ===\n");
     printf("Press the stop button on the elevator panel to exit\n");
