@@ -76,3 +76,10 @@ void StopButton(){ //blir kalt i main når stopknapp er trykket
     return;
 
 }
+
+void stopMidway(void){
+    setMotorDirection(DIRN_STOP);
+    clearVal(queueHead, floor);
+    openDoor();
+    return;
+}

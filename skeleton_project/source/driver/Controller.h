@@ -18,3 +18,4 @@ void setMotorDirection(MotorDirection dirn);
 
 void StopButton();
 
+void stopMidway(void);

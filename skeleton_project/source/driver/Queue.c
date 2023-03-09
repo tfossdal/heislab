@@ -8,11 +8,13 @@ node createNode(){
     return temp;
 }
 
-node addNode(node head, int value){
+node addNode(node head, int value, ButtonType btnType){
     node temp, p;
     temp = createNode();
     temp->data = value;
-    if(head == NULL){
+    temp->btnType = btnType;
+    if (head == NULL)
+    {
         head = temp;
     }
     else{
@@ -90,7 +92,8 @@ node clearQueue(node head){
     return p;
 }
 
-node addFloor(node head, int floor){
-    head = addNode(head, floor);
+node addFloor(node head, int floor, ButtonType btnType)
+{
+    head = addNode(head, floor, btnType);
     return head;
 }

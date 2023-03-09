@@ -12,8 +12,11 @@ extern int goal;
 
 extern int stop;
 
+extern int floor;
+
 extern MotorDirection direction;
 
 extern node queueHead;
 
 extern int obstruction;
+

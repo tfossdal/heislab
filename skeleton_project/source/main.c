@@ -15,6 +15,8 @@ int goal = -2;
 
 int stop = 0;
 
+int floor;
+
 MotorDirection direction = DIRN_STOP;
 
 node queueHead = NULL; // Starten på køen, skape litt trøbbel
@@ -57,6 +59,28 @@ int main()
 
         if (queueHead!=NULL && goal == -2){ //goal = -2 betyr at det ikke er noe mål enda, må settes til -2 når den kommer frem
             goal = queueHead->data;
+        }
+
+        if(direction!=DIRN_STOP && floor != -1){
+            node temp, p;
+            p = queueHead;
+            if(queueHead==NULL){
+                break;
+            };
+            while (p != NULL){
+                if(floor==p->data && p->btnType != BUTTON_HALL_UP && direction == DIRN_DOWN){
+                    stopMidway();
+                    timeOpened = now;
+                }
+                else if (floor == p->data && p->btnType != BUTTON_HALL_DOWN && direction == DIRN_UP)
+                {
+                    stopMidway();
+                    timeOpened = now;
+                }
+                
+                p = p->next;
+            }
+
         }
 
         if (floor == goal) // kjører når heis er fremme
@@ -121,7 +145,7 @@ int main()
             for (int j = 0; j < N_BUTTONS; j++)
             {
                 if (elevio_callButton(i, j) == 1){
-                    queueHead = addFloor(queueHead, i);
+                    queueHead = addFloor(queueHead, i, j);
                     elevio_buttonLamp(i, j, 1);
                 }
             }
