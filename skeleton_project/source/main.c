@@ -15,8 +15,6 @@ int goal = -2;
 
 int stop = 0;
 
-int floor;
-
 MotorDirection direction = DIRN_STOP;
 
 node queueHead = NULL; // Starten på køen, skape litt trøbbel
@@ -47,7 +45,7 @@ int main()
     {
         //printf("Her starte løkka på ny \n");
         int floor = elevio_floorSensor();
-        queueHead = printQueue(queueHead);
+        // queueHead = printQueue(queueHead);
 
         if(floor != -1){ // Sets the floor indicator
             elevio_floorIndicator(floor);
@@ -68,20 +66,22 @@ int main()
         }
 
         if(direction!=DIRN_STOP && floor != -1){
-            node temp, p;
+            node p;
             p = queueHead;
             if(queueHead==NULL){
                 break;
             };
-            while (p != NULL){
+            while (p->next != NULL){
                 if(floor==p->data && p->btnType != BUTTON_HALL_UP && direction == DIRN_DOWN){
                     stopMidway();
                     timeOpened = now;
+                    break;
                 }
                 else if (floor == p->data && p->btnType != BUTTON_HALL_DOWN && direction == DIRN_UP)
                 {
                     stopMidway();
                     timeOpened = now;
+                    break;
                 }
                 
                 p = p->next;

@@ -79,7 +79,8 @@ void StopButton(){ //blir kalt i main når stopknapp er trykket
 
 void stopMidway(void){
     setMotorDirection(DIRN_STOP);
-    clearVal(queueHead, floor);
+    clearVal(queueHead, elevio_floorSensor());
     openDoor();
+    
     return;
 }
