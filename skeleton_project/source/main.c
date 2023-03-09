@@ -25,6 +25,8 @@ int lastFloor = 0;
 
 MotorDirection lastDir;
 
+int hasStopped = 0;
+
 int main()
 {
     // MotorDirection *currentDir = &direction; // Holde styr på retningen til heisen, trenge nok ikkje vær peker
@@ -47,7 +49,7 @@ int main()
 
     while (1)
     {
-        //printf("Her starte løkka på ny \n");
+        printf("Her starte løkka på ny \n");
         int floor = elevio_floorSensor();
         // queueHead = printQueue(queueHead);
 
@@ -61,10 +63,21 @@ int main()
             printf("cleard cuz f=g\n");
         }
 
-        if(doors){
-            // printf("d"); //brukt til å test om doors er åpne i 3 sekunder etter knappen er sluppet
+        if(goal != -2 && hasStopped){
+            if (goal > lastFloor){
+                setMotorDirection(DIRN_UP);
+            }else if(goal < lastFloor){
+                setMotorDirection(DIRN_DOWN);
+            }else if(lastDir == DIRN_UP){
+                setMotorDirection(DIRN_DOWN);
+            }else if(lastDir == DIRN_DOWN){
+                setMotorDirection(DIRN_UP);
+            }
+            hasStopped = 0;
         }
+
         time_t now = time(NULL);    //oppdaterer nåværende tid
+
 
         if (queueHead!=NULL && direction == DIRN_STOP){ //goal = -2 betyr at det ikke er noe mål enda, må settes til -2 når den kommer frem
             goal = queueHead->data;
@@ -75,8 +88,9 @@ int main()
                 timeOpened = now;
             }
         }
+        printf("her?\n");
 
-        if(direction!=DIRN_STOP && floor != -1){
+        if((direction!=DIRN_STOP) && (floor != -1)){
             node p;
             p = queueHead;
             if(queueHead==NULL){
@@ -147,24 +161,24 @@ int main()
             if(direction != DIRN_STOP){
                 lastDir = direction;
             }
-            elevio_motorDirection(DIRN_STOP);
-            StopButton(); // gjør noen ting når stopp trykkes, se definisjon
             queueHead = NULL;       // setter kø til ingenting, kan muligens skape trøbbel at minne ikke frigjøres
             if (elevio_floorSensor() != -1){ // står heisen i en etasje skal den starte timer på åpne dører
                 timeOpened = time(NULL);    //sier når dørene ble åpnet
-            // }else{
-            //     setMotorDirection(DIRN_DOWN);
-            //     while(elevio_floorSensor() != 0){};     // gå ned til etasje er lik 0, altså første
-            //     setMotorDirection(DIRN_STOP);   // stopp der
+                setMotorDirection(DIRN_STOP);
             }
+            printf("før stopp\n");
+            StopButton(); // gjør noen ting når stopp trykkes, se definisjon
+            printf("etter stopp\n");
 
-            continue; //starter løkken på ny etter stop-knapp
+            // continue; //starter løkken på ny etter stop-knapp
 
         }
+        printf("Helt etter stopp\n");
         if (now >= timeOpened + 3 && doors==doorOpen){ // closes doors if open for more than three secs since stop
                 closeDoor();      // kanskje legge til at denne kun kjøres dersom dørene er åpne
                 printf("Doors closed \n");  // det kan gjørs me global variabel
         }
+        printf("Eg kjøre videre altså\n");
 
         for (int i = 0; i < N_FLOORS; i++) // oppdatere knapper
         {
@@ -204,14 +218,7 @@ int main()
 
         obstruction = elevio_obstruction();
 
-        if (elevio_obstruction())
-        {
-            elevio_stopLamp(1);
-        }
-        else
-        {
-            elevio_stopLamp(0);
-        }
+
     }
 
     return 0;

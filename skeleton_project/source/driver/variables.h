@@ -21,3 +21,5 @@ extern int obstruction;
 extern int lastFloor;
 
 extern MotorDirection lastDir;
+
+extern int hasStopped;

@@ -5,8 +5,6 @@
 
 
 
-int isStopped = 0;
-
 int ready(time_t timeStopped, time_t timeNow, int goal){
     int good2go = (timeNow > timeStopped + 3) && goal != -2 && doors == doorClosed && direction == 0;
     return good2go; // returner ready, om dørene er lukket, har et mål, dørene lukket og ikke i bevegelse
@@ -18,7 +16,7 @@ void initElev()
     int floor = elevio_floorSensor();
     printf("floor: %d \n",floor);
 
-    for (int i = 0; i < N_FLOORS; i++) // oppdatere knapper
+    for (int i = 0; i < N_FLOORS; i++) // oppdatere lys på knapper
         {
             for (int j = 0; j < N_BUTTONS; j++)
             {
@@ -41,9 +39,7 @@ void initElev()
     return;
 }
 
-int stopped(void){      // brukes ikke atm
-    return isStopped;
-}
+
 
 int arrived(){    // sjekker om etasje definert og heisen står i ro
     return ((elevio_floorSensor() != -1) && (direction == DIRN_STOP));
@@ -80,8 +76,22 @@ void StopButton(){ //blir kalt i main når stopknapp er trykket
             openDoor();
         }
         elevio_stopLamp(1);
-        isStopped = 1;
-    // Vurdere å legge inn status på stop til å blokkere bestillinger
+        stop = 1;
+        hasStopped = 1;
+        goal = -2;
+
+        for (int i = 0; i < N_FLOORS; i++) // oppdatere lys på knapper
+        {
+            for (int j = 0; j < N_BUTTONS; j++)
+            {
+                    elevio_buttonLamp(i, j, 0);
+            }
+            
+        }
+        
+        while(stop){
+            stop = elevio_stopButton();
+        }
     elevio_stopLamp(0);
     return;
 

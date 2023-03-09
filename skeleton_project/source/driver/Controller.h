@@ -4,8 +4,6 @@
 
 int ready(time_t timeStopped, time_t timeNow, int goal);
 
-int stopped(void);
-
 int arrived();
 
 void openDoor();
