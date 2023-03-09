@@ -16,5 +16,5 @@ void initElev();
 
 void setMotorDirection(MotorDirection dirn);
 
-void StopButton(node head);
+void StopButton();
 

@@ -26,7 +26,7 @@ int main()
     printf("=== Example Program ===\n");
     printf("Press the stop button on the elevator panel to exit\n");
 
-    initElev(direction); // Vårt start-program
+    initElev(); // Vårt start-program
 
 
     time_t timeClosed = time(NULL) - 3; // For å starta me dørene lukka, da de basere
@@ -54,9 +54,9 @@ int main()
 
         if (floor == goal) // kjører når heis er fremme
         {
-            setMotorDirection(DIRN_STOP, direction); // setter motor til stopp, må fikses så den ikke kalles når heisen skal videre
+            setMotorDirection(DIRN_STOP); // setter motor til stopp, må fikses så den ikke kalles når heisen skal videre
             queueHead = clearVal(queueHead, goal);      // fjerner en verdi fra køen
-            openDoor(&doors);       // åpner dørene
+            openDoor();       // åpner dørene
             timeClosed = time(NULL);    // sier at dørene ble åpnet nå, navnet er feil :(
             printf("goal is now %d \n", goal);  // brukt til feilsøking
             if(queueHead == NULL){  // hvis kø er tom skal det ikke være noe mål
@@ -76,12 +76,12 @@ int main()
             }                              // trenger løsning viss etasje udefinert
             else if (goal > floor)
             {
-                setMotorDirection(DIRN_UP, direction);
+                setMotorDirection(DIRN_UP);
                 // printf("jeje");
                 good2go = 0;
             }else if (goal < floor)
             {
-                setMotorDirection(DIRN_DOWN, direction);
+                setMotorDirection(DIRN_DOWN);
                 good2go = 0;
             }
             
@@ -90,15 +90,15 @@ int main()
 
         if (elevio_stopButton())
         {
-            StopButton(queueHead, direction, &doors); // gjør noen ting når stopp trykkes, se definisjon
+            StopButton(); // gjør noen ting når stopp trykkes, se definisjon
             queueHead = NULL;       // setter kø til ingenting, kan muligens skape trøbbel at minne ikke frigjøres
             elevio_motorDirection(DIRN_STOP);
             if (elevio_floorSensor() != -1){ // står heisen i en etasje skal den starte timer på åpne dører
                 timeClosed = time(NULL);    //sier når dørene ble åpnet
             }else{
-                setMotorDirection(DIRN_DOWN, direction);
+                setMotorDirection(DIRN_DOWN);
                 while(elevio_floorSensor() != 0){};     // gå ned til etasje er lik 0, altså første
-                setMotorDirection(DIRN_STOP, direction);   // stopp der
+                setMotorDirection(DIRN_STOP);   // stopp der
             }
 
             continue; //starter løkken på ny etter stop-knapp
