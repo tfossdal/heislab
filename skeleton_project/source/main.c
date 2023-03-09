@@ -47,7 +47,7 @@ int main()
         int floor = elevio_floorSensor();
         queueHead = printQueue(queueHead);
 
-        if(floor != -1){
+        if(floor != -1){ // Sets the floor indicator
             elevio_floorIndicator(floor);
         }
 
@@ -126,7 +126,7 @@ int main()
             {
                 if (elevio_callButton(i, j) == 1 && floor != i){
                     queueHead = addFloor(queueHead, i);
-                    // printf("hei");
+                    elevio_buttonLamp(i, j, 1);
                 }
             }
             
