@@ -65,7 +65,7 @@ int main()
             goal = queueHead->data;
         }
 
-        if(obstruction = 1){
+        if(obstruction == 1){
             if (doors == doorOpen){
                 timeOpened = now;
             }
