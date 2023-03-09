@@ -9,7 +9,7 @@
 
 enum doorStatus doors = doorClosed;
 
-int good2go = 1;
+int good2go = 1; //hei
 
 int goal = -2;
 
