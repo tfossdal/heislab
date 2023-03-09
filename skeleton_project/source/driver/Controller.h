@@ -2,7 +2,7 @@
 #include "elevio.h"
 #include "Queue.h"
 
-int ready(time_t timeStopped, time_t timeNow, int goal, int doors, MotorDirection *currentDir);
+int ready(time_t timeStopped, time_t timeNow, int goal);
 
 int stopped(void);
 

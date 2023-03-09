@@ -2,7 +2,9 @@
 #include "elevio.h"
 #include "Queue.h"
 
-extern int doors;
+enum doorStatus {doorClosed, doorOpen};
+
+extern enum doorStatus doors;
 
 extern int good2go;
 

@@ -3,10 +3,12 @@
 #include <time.h>
 #include "variables.h"
 
+
+
 int isStopped = 0;
 
-int ready(time_t timeStopped, time_t timeNow, int goal, int doors, MotorDirection *currentDir){
-    int good2go = (timeNow > timeStopped + 3) && goal != -2 && doors == 0 && *currentDir == 0;
+int ready(time_t timeStopped, time_t timeNow, int goal){
+    int good2go = (timeNow > timeStopped + 3) && goal != -2 && doors == doorClosed && direction == 0;
     return good2go; // returner ready, om dørene er lukket, har et mål, dørene lukket og ikke i bevegelse
 }
 
@@ -40,13 +42,13 @@ int arrived(){    // sjekker om etasje definert og heisen står i ro
 
 void openDoor(){
     elevio_doorOpenLamp(1);
-    doors = 1;
+    doors = doorOpen;
     return;
 }
 
 void closeDoor(){
     elevio_doorOpenLamp(0);
-    doors = 0;
+    doors = doorClosed;
     return;
 }
 

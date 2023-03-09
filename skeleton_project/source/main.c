@@ -5,8 +5,9 @@
 #include "driver/elevio.h"
 #include "driver/Controller.h"
 #include "driver/Queue.h"
+#include "driver/variables.h"
 
-int doors = 0;
+enum doorStatus doors = doorClosed;
 
 int good2go = 1;
 
@@ -67,7 +68,7 @@ int main()
             printf("Clearval has been run\n"); // brukt til feilsøking
         }
         
-        good2go = ready(timeClosed, now, goal, doors, direction); // sjekker om heisen er klar, dvs tid siden dører åpnet, om dører er åpne og har et mål
+        good2go = ready(timeClosed, now, goal); // sjekker om heisen er klar, dvs tid siden dører åpnet, om dører er åpne og har et mål
         
 
         printf("floor: %d \n", floor);
@@ -106,9 +107,9 @@ int main()
             continue; //starter løkken på ny etter stop-knapp
 
         }
-        if (now > timeClosed + 3){ // closes doors if open for more than three secs since stop
-            closeDoor();      // kanskje legge til at denne kun kjøres dersom dørene er åpne
-            printf("Doors closed \n");  // det kan gjørs me global variabel
+        if (now >= timeClosed + 3 && doors==doorOpen){ // closes doors if open for more than three secs since stop
+                closeDoor();      // kanskje legge til at denne kun kjøres dersom dørene er åpne
+                printf("Doors closed \n");  // det kan gjørs me global variabel
         }
 
         for (int i = 0; i < N_FLOORS; i++) // oppdatere knapper
